@@ -1,0 +1,23 @@
+{
+  "name": "@devsms/web",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:ssr": "node server.js",
+    "build": "vite build --outDir dist/client && vite build --ssr src/entry-server.jsx --outDir dist/server",
+    "start:ssr": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "tailwindcss": "^4.1.0",
+    "vite": "^7.1.9"
+  }
+}

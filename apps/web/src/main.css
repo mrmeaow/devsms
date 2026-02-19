@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f3f5f7;
+  --card: #ffffff;
+  --ink: #121314;
+  --muted: #5d6268;
+  --accent: #045e4f;
+  --accent-soft: #e6f6f3;
+  --line: #dde2e8;
+  --warn: #ab4200;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 0%, #ffffff 0%, var(--bg) 42%);
+  color: var(--ink);
+  font-family: "Space Grotesk", "IBM Plex Sans", "Segoe UI", sans-serif;
+}
