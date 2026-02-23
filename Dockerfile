@@ -5,6 +5,8 @@ WORKDIR /app
 RUN corepack enable
 RUN apt-get update && apt-get install -y python3 node-gyp make g++
 
+COPY package.json package.json
+COPY pnpm-lock.yaml pnpm-lock.yaml 
 COPY . .
 RUN pnpm install --frozen-lockfile
 

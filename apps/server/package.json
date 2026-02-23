@@ -17,8 +17,5 @@
   },
   "devDependencies": {
     "node-gyp": "^12.2.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": ["better-sqlite3"]
   }
 }
