@@ -121,3 +121,25 @@ Canonical lifecycle:
 - `queued -> expired`
 
 Provider mapping implemented in `apps/server/src/status-map.js`.
+
+## Docker
+
+Build and run locally:
+
+```bash
+docker build -t devsms:local .
+docker run --rm -p 4000:4000 -p 5153:5153 devsms:local
+```
+
+- API: `http://localhost:4000`
+- Web (SSR): `http://localhost:5153`
+
+## CI / Image Publish
+
+GitHub Actions workflow: `.github/workflows/ci-image.yml`
+
+- Runs build checks on pull requests.
+- On push to `main` / `master` / `work` and tags (`v*`), builds Docker image and publishes to GHCR:
+  - `ghcr.io/<owner>/<repo>:<branch>`
+  - `ghcr.io/<owner>/<repo>:sha-...`
+  - `ghcr.io/<owner>/<repo>:latest` (default branch only)

@@ -1,19 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --bg: #f3f5f7;
-  --card: #ffffff;
-  --ink: #121314;
-  --muted: #5d6268;
-  --accent: #045e4f;
-  --accent-soft: #e6f6f3;
-  --line: #dde2e8;
-  --warn: #ab4200;
+:root,
+:root[data-theme='dark'] {
+  --bg: #0f1113;
+  --card: #171a1f;
+  --card-2: #1d2128;
+  --ink: #eceff3;
+  --muted: #9ca3af;
+  --line: #343945;
+  --accent: #de5b2d;
+  --accent-soft: #32231d;
+  --row-hover: #222733;
+}
+
+:root[data-theme='light'] {
+  --bg: #eceef1;
+  --card: #f9fafb;
+  --card-2: #f0f2f5;
+  --ink: #17181a;
+  --muted: #5e6470;
+  --line: #c9ced6;
+  --accent: #bf4a21;
+  --accent-soft: #ffe7dd;
+  --row-hover: #edf0f5;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 20% 0%, #ffffff 0%, var(--bg) 42%);
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% -10%, #232832 0%, var(--bg) 45%);
   color: var(--ink);
   font-family: "Space Grotesk", "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+:root[data-theme='light'] body {
+  background: radial-gradient(circle at 10% -10%, #ffffff 0%, var(--bg) 45%);
+}
+
+.retro-shell {
+  border-color: var(--line);
+  background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+}
+
+.retro-header,
+.retro-footer {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--card));
+}
+
+.retro-kicker {
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.retro-title {
+  margin-top: 0.2rem;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.retro-subtitle {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.retro-input,
+.retro-button {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 85%, black);
+  color: var(--ink);
+  padding: 0.62rem 0.8rem;
+  font-size: 0.9rem;
+  outline: none;
+  transition: 0.18s ease;
+}
+
+.retro-button:hover,
+.retro-input:hover {
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--line));
+}
+
+.retro-button:focus-visible,
+.retro-input:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  border-color: var(--accent);
+}
+
+.retro-chip {
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 86%, black);
+  padding: 0.3rem 0.65rem;
+  color: var(--muted);
+}
+
+.retro-chip-warn {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  color: color-mix(in srgb, var(--accent) 60%, var(--ink));
 }
