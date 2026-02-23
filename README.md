@@ -9,6 +9,10 @@ Gateway-neutral SMS inbox scaffold with:
 - Vite + React 19 inbox UI (`apps/web`)
 - Tailwind CSS v4 setup
 
+![Screenshot](./screenshot.png)
+
+---
+
 
 ## Pull Image
 
@@ -31,13 +35,7 @@ podman pull ghcr.io/mrmeaow/devsms:latest
 ### Docker
 
 ```bash
-docker run --rm -p 5153:5153 ghcr.io/mrmeaow/devsms:latest
-```
-
-### Podman 
-
-```bash
-podman run --rm -p 5153:5153 ghcr.io/mrmeaow/devsms:latest
+docker run -d -p 4000:4000 -p 5153:5153 ghcr.io/mrmeaow/devsms:latest
 ```
 
 ## Workspace
@@ -175,72 +173,6 @@ GitHub Actions workflow: `.github/workflows/ci-image.yml`
   - `ghcr.io/<owner>/<repo>:sha-...`
   - `ghcr.io/<owner>/<repo>:latest` (default branch only)
 
-## Container Image (GHCR)
-
-Prebuilt container images are published to **GitHub Container Registry (GHCR)** via CI.
-
-Image namespace:
-
-```
-ghcr.io/mrmeaow/devsms
-```
-
-### Available Tags
-
-Tags are automatically generated:
-
-- `latest` → default branch build  
-- `main` → branch tag  
-- `vX.Y.Z` → git tag releases  
-- `sha-<commit>` → commit-specific immutable image  
-
----
-
-## Pull Image
-
-### Docker
-
-```bash
-docker pull ghcr.io/mrmeaow/devsms:latest
-```
-
-### Podman
-
-```bash
-podman pull ghcr.io/mrmeaow/devsms:latest
-```
-
----
-
-## Run Container
-
-### Docker
-
-```bash
-docker run --rm -p 4000:4000 -p 5153:5153 ghcr.io/mrmeaow/devsms:latest
-```
-
-### Podman (rootless recommended)
-
-```bash
-podman run --rm -p 4000:4000 -p 5153:5153 ghcr.io/mrmeaow/devsms:latest
-```
-
----
-
-## Production (Detached Mode)
-
-```bash
-docker run -d \
-  --name devsms \
-  --restart unless-stopped \
-  -p 4000:4000 \
-  -p 5153:5153 \
-  ghcr.io/mrmeaow/devsms:latest
-```
-
----
-
 ## Kubernetes Example
 
 ```yaml
@@ -272,3 +204,16 @@ spec:
 
 Images are built by GitHub Actions using Docker Buildx with layer caching.  
 Immutable images are available via SHA tags for reproducible deployments.
+
+
+## Contriutions
+
+You're welcome to contribute! Fork it, work on it, make your PR, wait for my review.
+
+> Must follow convensional git commits!
+
+**Made with :heart: by [mrmeaow](https://mrmeaow.netlify.app)**
+
+## LICENSE
+
+[GNU GENERAL PUBLIC LICENSE](./LICENSE)
