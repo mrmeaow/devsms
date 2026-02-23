@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:ssr": "node server.js",
     "build": "vite build --outDir dist/client && vite build --ssr src/entry-server.jsx --outDir dist/server",
-    "start:ssr": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "express": "^4.21.2",

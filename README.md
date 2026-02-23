@@ -9,6 +9,35 @@ Gateway-neutral SMS inbox scaffold with:
 - Vite + React 19 inbox UI (`apps/web`)
 - Tailwind CSS v4 setup
 
+![Screenshot](./screenshot.png)
+
+---
+
+
+## Pull Image
+
+### Docker
+
+```bash
+docker pull ghcr.io/mrmeaow/devsms:latest
+```
+
+### Podman
+
+```bash
+podman pull ghcr.io/mrmeaow/devsms:latest
+```
+
+---
+
+## Run Container
+
+### Docker
+
+```bash
+docker run -d -p 4000:4000 -p 5153:5153 ghcr.io/mrmeaow/devsms:latest
+```
+
 ## Workspace
 
 - `apps/server`: canonical message API + DB + SSE
@@ -34,7 +63,7 @@ pnpm dev:server
 pnpm dev:web
 ```
 
-Server API: `http://localhost:4000`
+Server API: `http://localhost:4000`  
 Web UI: `http://localhost:5153`
 
 SSR web server mode:
@@ -139,7 +168,52 @@ docker run --rm -p 4000:4000 -p 5153:5153 devsms:local
 GitHub Actions workflow: `.github/workflows/ci-image.yml`
 
 - Runs build checks on pull requests.
-- On push to `main` / `master` / `work` and tags (`v*`), builds Docker image and publishes to GHCR:
+- On push to `main` and tags (`v*`), builds Docker image and publishes to GHCR:
   - `ghcr.io/<owner>/<repo>:<branch>`
   - `ghcr.io/<owner>/<repo>:sha-...`
   - `ghcr.io/<owner>/<repo>:latest` (default branch only)
+
+## Kubernetes Example
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devsms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devsms
+  template:
+    metadata:
+      labels:
+        app: devsms
+    spec:
+      containers:
+        - name: devsms
+          image: ghcr.io/mrmeaow/devsms:latest
+          ports:
+            - containerPort: 4000
+            - containerPort: 5153
+```
+
+---
+
+## Image Provenance
+
+Images are built by GitHub Actions using Docker Buildx with layer caching.  
+Immutable images are available via SHA tags for reproducible deployments.
+
+
+## Contriutions
+
+You're welcome to contribute! Fork it, work on it, make your PR, wait for my review.
+
+> Must follow convensional git commits!
+
+**Made with :heart: by [mrmeaow](https://mrmeaow.netlify.app)**
+
+## LICENSE
+
+[GNU GENERAL PUBLIC LICENSE](./LICENSE)

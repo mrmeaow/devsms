@@ -5,12 +5,20 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "start": "NODE_ENV=production node src/index.js",
+    "rebuild": "pnpm exec better-sqlite3 install",
+    "build": "echo 'DONE!'"
   },
   "dependencies": {
-    "better-sqlite3": "^11.9.0",
+    "better-sqlite3": "^11.10.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "nanoid": "^5.1.5"
+  },
+  "devDependencies": {
+    "node-gyp": "^12.2.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
   }
 }

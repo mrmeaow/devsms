@@ -119,7 +119,12 @@ export function App({ initialMessages = [] }) {
           <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
             <div>
               <p className="retro-kicker">Signal desk · unified stream</p>
-              <h1 className="retro-title">RETRO SMS COMMANDER</h1>
+              <h1 className="retro-title flex items-center">
+                <span>DevSMS</span>
+                <span className="inline-block ml-2 text-xs p-1 px-2 border rounded-md border-amber-400 bg-amber-100 text-gray-700">
+                  alpha
+                </span>
+              </h1>
               <p className="retro-subtitle">A crisp, operator-first inbox for live carrier traffic.</p>
             </div>
 

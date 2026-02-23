@@ -6,6 +6,12 @@
     "dev": "pnpm -r --parallel dev",
     "dev:server": "pnpm --filter @devsms/server dev",
     "dev:web": "pnpm --filter @devsms/web dev:ssr",
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "app:server": "pnpm --filter @devsms/server",
+    "app:web": "pnpm --filter @devsms/web",
+    "start": "pnpm -r --parallel start"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0"
   }
 }

@@ -1,30 +1,22 @@
-FROM node:22-bookworm-slim AS base
+FROM node:22-bookworm
+
 WORKDIR /app
+
 RUN corepack enable
+RUN apt-get update && apt-get install -y python3 node-gyp make g++
 
-FROM base AS deps
-COPY package.json pnpm-workspace.yaml ./
-COPY apps/server/package.json apps/server/package.json
-COPY apps/web/package.json apps/web/package.json
-RUN pnpm install --no-frozen-lockfile
-
-FROM deps AS build
 COPY . .
-RUN pnpm --filter @devsms/web build
+RUN pnpm install --frozen-lockfile
 
-FROM node:22-bookworm-slim AS runtime
-WORKDIR /app
+RUN cd node_modules/.pnpm/better-sqlite3@11.10.0/node_modules/better-sqlite3 && npx node-gyp configure && npx node-gyp build
+RUN cd ../../../../../
+
+# Build apps
+RUN pnpm build
+
 ENV NODE_ENV=production
 ENV PORT=4000
 ENV WEB_PORT=5153
-RUN corepack enable
-
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/server/node_modules ./apps/server/node_modules
-COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
-COPY --from=build /app/apps/server ./apps/server
-COPY --from=build /app/apps/web ./apps/web
-COPY scripts/start.sh ./scripts/start.sh
 
 EXPOSE 4000 5153
-CMD ["bash", "./scripts/start.sh"]
+CMD ["pnpm", "start"]
