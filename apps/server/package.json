@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "start": "NODE_ENV=production node src/index.js",
+    "rebuild": "pnpm rebuild better-sqlite3",
+    "build": "echo 'READY!'"
   },
   "dependencies": {
     "better-sqlite3": "^11.9.0",

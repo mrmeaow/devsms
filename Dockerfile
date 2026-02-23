@@ -1,30 +1,37 @@
-FROM node:22-bookworm-slim AS base
+FROM node:22-bookworm AS build
 WORKDIR /app
 RUN corepack enable
+RUN apt-get update && apt-get install -y python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
 
-FROM base AS deps
-COPY package.json pnpm-workspace.yaml ./
-COPY apps/server/package.json apps/server/package.json
-COPY apps/web/package.json apps/web/package.json
-RUN pnpm install --no-frozen-lockfile
-
-FROM deps AS build
 COPY . .
-RUN pnpm --filter @devsms/web build
+RUN pnpm install --frozen-lockfile
+RUN pnpm build
 
+# -------------------------
 FROM node:22-bookworm-slim AS runtime
 WORKDIR /app
-ENV NODE_ENV=production
-ENV PORT=4000
-ENV WEB_PORT=5153
 RUN corepack enable
 
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/server/node_modules ./apps/server/node_modules
-COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
+ENV NODE_ENV=production
+
+# Copy workspace metadata
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/server/package.json apps/server/package.json
+COPY apps/web/package.json apps/web/package.json
+
+# Install runtime deps (compile better-sqlite3 here)
+RUN apt-get update && apt-get install -y python3 make g++ \
+  && rm -rf /var/lib/apt/lists/* \
+  && pnpm install --prod --frozen-lockfile
+
+# Copy build artifacts
 COPY --from=build /app/apps/server ./apps/server
 COPY --from=build /app/apps/web ./apps/web
 COPY scripts/start.sh ./scripts/start.sh
+
+# Rebuild for better-sqlite3 shits :)
+RUN pnpm app:server rebuild
 
 EXPOSE 4000 5153
 CMD ["bash", "./scripts/start.sh"]
